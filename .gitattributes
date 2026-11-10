@@ -1,0 +1,9 @@
+# Keep LF line endings in the repo (the build servers run Linux).
+* text=auto eol=lf
+
+# Binary assets
+*.png binary
+*.ico binary
+*.icns binary
+*.jpg binary
+*.webp binary

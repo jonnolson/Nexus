@@ -1,0 +1,17 @@
+node_modules/
+.turbo/
+.DS_Store
+Thumbs.db
+
+# env & secrets
+.env*
+!.env.example
+supabase/.temp/
+supabase/.branches/
+supabase/signing_keys.json
+
+# private data: Bonsai exports (client names, emails, financials). Never commit.
+apps/past-content-docs/
+
+# build output
+apps/desktop/src-tauri/target/
