@@ -1,0 +1,22 @@
+// Cloudflare Workers config for the hosted Nexus web app (built with @opennextjs/cloudflare).
+// Size budget: the Workers Free plan allows 3 MiB compressed; Nexus measured 2,990 KiB on
+// 2026-11-10 (97%). Check with `pnpm cf:build && pnpm cf:size` before adding big
+// dependencies; past the cap, move to Workers Paid ($5/mo, 10 MiB).
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nexus",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-15",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": { "enabled": true },
+  // Runtime settings (not secrets). Secrets such as RESEND_API_KEY go in with
+  // `npx wrangler secret put NAME`, never in this file.
+  "vars": {
+    // Password-only sign-in for now (owner's choice, 2026-11-10). Remove to require MFA.
+    "NEXUS_MFA_REQUIRED": "false"
+  }
+}

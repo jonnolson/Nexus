@@ -25,7 +25,7 @@ separate Work and Personal spaces).
 | **Phone** | **Installable PWA** (same web app) | No app-store overhead; responsive UI from day one. Tauri v2 can later produce real iOS/Android builds from the same shell if needed. |
 | **Styling / UI** | **Tailwind CSS v4** + **shadcn/ui** (add when building screens) | Owned component code, fast to theme to your own brand. |
 | **Validation** | **Zod** | One schema validates forms, Server Actions and env vars. |
-| **Hosting** | **Vercel** (web) + **Supabase Cloud** (data) | Zero-ops, preview deploys, HTTPS by default. |
+| **Hosting** | **Cloudflare Workers** (web, via `@opennextjs/cloudflare`; free plan) + **Supabase Cloud** (data, Canada Central) | Owner already has Cloudflare; free tier, HTTPS, deploy on push. Worker must stay under 3 MiB gzip on the free plan (Workers Paid: 10 MiB). Changed from Vercel on 2026-11-10. |
 
 ### Added when the feature lands (not installed yet)
 
@@ -65,7 +65,7 @@ separate Work and Personal spaces).
    dynamic rendering on every page.
 7. **Desktop** — Tauri capabilities empty by default; the remote page has no native API access.
 8. **Later** — passkeys as a second factor, audit log table, Supabase PITR backups,
-   Vercel firewall / rate limiting on auth routes.
+   Cloudflare WAF / rate limiting rules on auth routes.
 
 ## Data conventions
 

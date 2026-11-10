@@ -8,7 +8,24 @@ Nexus logo + app icons (web + desktop), accent `#94FFF3` used as outlines/stroke
 (`public/background-graphics/`, recoloured to the accent) with frosted-glass content panels
 (`glass` utility in `globals.css`, `components/shell/page-backdrop.tsx`).
 
-**No git commits yet**: everything is untracked on `main`.
+**Git:** first commits made on `main` (2026-11-10). `apps/past-content-docs/` (Bonsai
+exports, private) is git-ignored and must stay that way.
+
+**Production setup in progress** (decided 2026-11-10): **Cloudflare Workers free plan**
+(web, via `@opennextjs/cloudflare`; config `apps/web/wrangler.jsonc`, built on branch
+`try-cloudflare`) + Supabase Cloud, region **Canada Central** (data). Worker measured
+2,990 KiB gzip vs the free plan's 3,072 KiB cap: check `pnpm cf:build && pnpm cf:size`
+before adding big dependencies; past the cap → Workers Paid $5/mo. The OpenNext build
+needs Linux (Windows can't create its symlinks): Cloudflare's Git builds run on Linux,
+or build locally in Docker/WSL. desktop = install the live site as an Edge app for now
+(Tauri installer later, needs Rust + C++ Build Tools); phone = "Add to Home Screen" (PWA).
+Every `git push` to `main` deploys; desktop/phone load the live site, so they update too.
+Sign-in is **password-only** in prod for now (`NEXUS_MFA_REQUIRED=false`, owner's choice).
+Real local data (not Test Client/Project/INV-0001) gets copied to prod under the owner's
+prod account. Steps: (1) owner creates GitHub repo + Supabase project, runs
+`npx supabase login`; (2) Claude links + `supabase db push`, configures auth; (3) owner
+connects the repo in Cloudflare (Workers → Import a repository), Claude supplies settings; (4) owner signs up on prod, then
+signups get disabled; (5) Claude copies data; (6) Edge app + phone install.
 
 **Bonsai import in progress** (exports in `apps/past-content-docs/`): clients (45), projects (133) and invoices (192) done;
 next: tasks → time (mark historical time as billed!) → expenses. Decisions + name mapping in
