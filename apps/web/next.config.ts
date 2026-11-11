@@ -35,8 +35,11 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  cacheComponents: true,
-  partialPrefetching: true,
+  // Off: Cache Components hangs every render on Cloudflare Workers (vercel/next.js#94880,
+  // opennextjs-cloudflare#1450). Nexus uses no "use cache", so only the static-shell
+  // optimisation is lost. Turn back on once OpenNext supports it.
+  cacheComponents: false,
+  partialPrefetching: false,
   poweredByHeader: false,
   turbopack: {
     rules: {

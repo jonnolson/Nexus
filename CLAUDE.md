@@ -7,7 +7,11 @@ Non-negotiables:
 - Every table: RLS on, `owner_id = (select auth.uid())` policy. Copy the template in
   `supabase/migrations/20261109000000_foundation.sql`. Schema changes only via new migrations.
 - Every Server Action / Route Handler / data-reading Server Component calls `requireUser()`.
-- Cache Components is on: cookie/session reads go inside `<Suspense>`. `middleware` is now `proxy.ts`.
+- Cache Components is **off** (it hangs on Cloudflare Workers; see `next.config.ts`). Keep
+  writing code as if it were on (cookie/session reads inside `<Suspense>`, `connection()`
+  before `Date`, no `"use cache"`) so it can be re-enabled later. `middleware` is now `proxy.ts`.
+- Hosting: Cloudflare Workers (free plan, 3 MiB cap, ~97% used). Don't add large dependencies
+  without checking `pnpm cf:size`. Supabase prod project ref `idvtsyniazgjjclfxjyi` (US West).
 - Secrets never in `NEXT_PUBLIC_*`. Server-only modules start with `import "server-only"`.
 - Money = integer minor units + currency code.
 - New module: add its route under `apps/web/src/app/(app)/` and flip `ready: true` in
